@@ -1,7 +1,8 @@
 class Post < ActiveRecord::Base
 
   belongs_to :author
-  validate :is_title_case 
+  validate :is_title_case
+  before_save :make_title_case
 
   private
 
@@ -15,3 +16,11 @@ class Post < ActiveRecord::Base
     self.title = self.title.titlecase
   end
 end
+
+# title.split.any?{|w|w[0].upcase != w[0]} same as:
+#  title.split.each do |w|
+#    if w[0].upcase != w[0]
+#      return true
+#    end
+#    return false
+# end
